@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}Adhaar Card Form{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Adhaar Card Details Form</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="adhaar_no">Adhaar Number</label>
+                    <input type="text" class="form-control" pattern="\d{12}"  id="adhaar_no" name="adhaar_no" maxlength="12" required>
+                </div>
+                <div class="form-group">
+                    <label for="profile_img">Profile Image</label>
+                    <input type="file" class="form-control-file" id="profile_img" name="profile_img" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="date_of_birth">Date of Birth</label>
+                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
+                </div>
+                <div class="form-group">
+                    <label for="house_no">House Number</label>
+                    <input type="text" class="form-control" id="house_no" name="house_no" required>
+                </div>
+                <div class="form-group">
+                    <label for="locality">Locality</label>
+                    <input type="text" class="form-control" value=" " id="locality" name="locality" required>
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <select class="form-control" id="state" name="state" required>
+                        {% for state in States %}
+                        <option value="{{ state }}">{{ state }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select class="form-control" id="gender" name="gender" required>
+                        {% for option in Gender %}
+                        <option value="{{ option }}">{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="so_do">SO / DO / CO </label>
+                    <select class="form-control" id="so_do" name="so_do" required>
+                        <option value="S/O"> S/O </option>
+                        <option value="D/O"> D/O </option>
+                        <option value="C/O"> C/O </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="local_fullname">Local Fullname</label>
+                    <input type="text" class="form-control" id="local_fullname" name="local_fullname" placeholder="will be auto filled" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="father_name">Father's Name</label>
+                    <input type="text" class="form-control" id="father_name" name="father_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="surname">Surname</label>
+                    <input type="text" class="form-control" id="surname" name="surname" required>
+                </div>
+                <div class="form-group">
+                    <label for="fullname"> Full Name</label>
+                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="will be auto filled" required>
+                </div>
+                <div class="form-group">
+                    <label for="post_office">Post Office</label>
+                    <input type="text" class="form-control" id="post_office" name="post_office" required>
+                </div>
+                <div class="form-group">
+                    <label for="pincode">Pincode</label>
+                    <input type="text" class="form-control" id="pincode" name="pincode" maxlength="6" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="local_gender">Local Gender</label>
+                    <input type="text" class="form-control" id="local_gender" name="local_gender" placeholder="will be auto filled" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="full_father_name_local">Father Name Local</label>
+                    <input type="text" class="form-control" id="full_father_name_local" name="full_father_name_local" placeholder="will be auto filled" required>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="address_local">Local Address</label>
+            <textarea class="form-control" id="address_local" name="address_local" rows="3" placeholder="will be auto filled" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="Language">Language</label>
+            <select class="form-control" id="Language" name="Language" required>
+                {% for option in Language %}
+                <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="local_language">Local Language</label>
+            <input class="form-control" id="local_language" name="local_language" rows="3" placeholder="will be auto filled" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        function updateAddress() {
+            var house_no = $('#house_no').val();
+            var locality = $('#locality').val();
+            var post_office = $('#post_office').val();
+            var city = $('#city').val();
+            var pincode = $('#pincode').val();
+            var state = $('#state').val();
+
+            var address = house_no + " " + locality +" " + post_office+" " + city+" " + state+" " +'-'+ pincode ;
+            $('#address').val(address);
+            return address;
+        }
+
+        $('#house_no, #locality, #post_office, #city, #pincode, #state').on('input change', function() {
+            updateAddress();
+        });
+
+        function updateFullname(){
+            var name        = $('#name').val();
+            var father_name = $('#father_name').val();
+            var surname     = $('#surname').val();
+
+            var fullname = name+" "+father_name+" "+surname;
+            $('#fullname').val(fullname);
+            return fullname;
+        }
+
+        function updateFullFathername(){
+            var father_name = $('#father_name').val();
+            var surname     = $('#surname').val();
+
+            var fullfathername = father_name+" "+surname;
+            $('#full_father_name_local').val(fullfathername);
+            return fullfathername;
+        }
+
+        $("#name, #father_name, #surname").on('input change',function(){
+            updateFullname();
+        });
+
+        $("#father_name, #surname").on('input change',function(){
+            updateFullFathername();
+        });
+
+        $('#Language').change(function() {
+            var language = $(this).val();
+            var gender = $('#gender').val();
+            var full_father_name_local = $('#full_father_name_local').val();
+            var address = $('#address').val();
+            var fullname = $('#fullname').val();
+    
+            $.ajax({
+                type: 'POST',
+                url: '/translate_function/',
+                data: {
+                    'Language': language,
+                    'gender': gender,
+                    'address': address,
+                    'fullname':fullname,
+                    'full_father_name_local':full_father_name_local,
+                    // Add other data you want to send for translation
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    $('#local_gender').val(response.local_gender);
+
+                    if ($('#gender').val()  == 'Male' && $('#Language').val()  == 'mr'   ) {
+                        $('#local_gender').val("पुरुष");
+                    }
+                    if ($('#gender').val()  == 'Female' && $('#Language').val()  == 'mr'   ) {
+                        $('#local_gender').val("स्त्री");
+                    }
+
+                    if ($('#gender').val()  == 'Male' && $('#Language').val()  == 'hi'   ) {
+                        $('#local_gender').val("पुरुष");
+                    }
+                    if ($('#gender').val()  == 'Female' && $('#Language').val()  == 'hi'   ) {
+                        $('#local_gender').val("स्त्री");
+                    }
+                    
+                    $('#address_local').val(response.local_address);
+                    $('#local_language').val(response.local_language);
+                    $('#local_fullname').val(response.local_fullname);
+                    $('#full_father_name_local').val(response.full_father_name_local);
+                    
+
+                },
+                error: function(xhr, errmsg, err) {
+                    console.log(xhr.status + ": " + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+    
+{% endblock %}

@@ -1,0 +1,62 @@
+
+
+
+To convert addresses or any text from English to Marathi or Hindi, you can use various libraries and tools available in Python. One popular option is the Google Translate API, which can handle translations between a wide range of languages, including English, Marathi, and Hindi. Additionally, you can use the `translate` library, which provides a simple interface to the Google Translate API.
+
+Here are the steps to achieve this:
+
+1. **Install the `translate` library**:
+   You can install this library using pip:
+   ```sh
+   pip install translate
+   ```
+
+2. **Use the `translate` library to translate text**:
+   Here is an example of how to use the library to translate text from English to Marathi and Hindi.
+
+```python
+from translate import Translator
+
+# Translate to Marathi
+translator_marathi = Translator(to_lang="mr")
+english_text = "123 Main Street, Mumbai, Maharashtra, India"
+marathi_translation = translator_marathi.translate(english_text)
+print("Marathi Translation:", marathi_translation)
+
+# Translate to Hindi
+translator_hindi = Translator(to_lang="hi")
+hindi_translation = translator_hindi.translate(english_text)
+print("Hindi Translation:", hindi_translation)
+```
+
+### Example Output
+```plaintext
+Marathi Translation: १२३ मेन स्ट्रीट, मुंबई, महाराष्ट्र, भारत
+Hindi Translation: १२३ मेन स्ट्रीट, मुंबई, महाराष्ट्र, भारत
+```
+
+### Additional Options
+- **Googletrans library**: Another alternative is using the `googletrans` library, which is a free and unlimited Python library that implements Google Translate API.
+  ```sh
+  pip install googletrans==4.0.0-rc1
+  ```
+  Here is an example:
+  ```python
+  from googletrans import Translator
+
+  translator = Translator()
+
+  # Translate to Marathi
+  marathi_translation = translator.translate("123 Main Street, Mumbai, Maharashtra, India", dest='mr')
+  print("Marathi Translation:", marathi_translation.text)
+
+  # Translate to Hindi
+  hindi_translation = translator.translate("123 Main Street, Mumbai, Maharashtra, India", dest='hi')
+  print("Hindi Translation:", hindi_translation.text)
+  ```
+
+These libraries should help you easily convert addresses or any other text from English to Marathi or Hindi.
+
+
+
+
